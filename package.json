@@ -1,0 +1,33 @@
+{
+  "name": "tree-sitter-moocode",
+  "version": "0.1.0",
+  "description": "Tree-sitter grammar for LambdaMOO/ToastStunt MOO code.",
+  "main": "grammar.js",
+  "type": "commonjs",
+  "scripts": {
+    "generate": "tree-sitter generate",
+    "test": "tree-sitter test",
+    "parse": "tree-sitter parse"
+  },
+  "keywords": [
+    "tree-sitter",
+    "moocode",
+    "moo",
+    "toaststunt",
+    "lambdamoo"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "tree-sitter-cli": "^0.26.9"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.moocode",
+      "file-types": [
+        "moo",
+        "moocode"
+      ]
+    }
+  ]
+}
+

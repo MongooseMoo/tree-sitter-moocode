@@ -1,0 +1,277 @@
+================================================================================
+single statements
+================================================================================
+
+return player.location;
+break outer;
+continue;
+player:tell("ok");
+;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (return_statement
+        value: (expression
+          (postfix_expression
+            (property_expression
+              object: (expression
+                (primary_expression
+                  (identifier)))
+              property: (identifier)))))))
+  (statement
+    (single_statement
+      (break_statement
+        label: (identifier))))
+  (statement
+    (single_statement
+      (continue_statement)))
+  (statement
+    (single_statement
+      (expression
+        (postfix_expression
+          (verb_call_expression
+            object: (expression
+              (primary_expression
+                (identifier)))
+            verb: (identifier)
+            arguments: (argument_list
+              (argument
+                (expression
+                  (primary_expression
+                    (literal
+                      (string)))))))))))
+  (statement
+    (single_statement)))
+
+================================================================================
+conditionals and loops
+================================================================================
+
+if (player in connected_players())
+  player:tell("connected");
+elseif (player.wizard)
+  return #0;
+else
+  return #-1;
+endif
+
+for item, index in (items)
+  item.name = index;
+endfor
+
+for i in [1..$]
+  continue;
+endfor
+
+while outer (ticks > 0)
+  break outer;
+endwhile
+
+fork worker (5)
+  notify(player, "done");
+endfork
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (if_statement
+      (if_clause
+        condition: (condition
+          (expression
+            (binary_expression
+              left: (expression
+                (primary_expression
+                  (identifier)))
+              right: (expression
+                (primary_expression
+                  (function_call
+                    function: (identifier)))))))
+        body: (statement
+          (single_statement
+            (expression
+              (postfix_expression
+                (verb_call_expression
+                  object: (expression
+                    (primary_expression
+                      (identifier)))
+                  verb: (identifier)
+                  arguments: (argument_list
+                    (argument
+                      (expression
+                        (primary_expression
+                          (literal
+                            (string))))))))))))
+      (elseif_clause
+        condition: (condition
+          (expression
+            (postfix_expression
+              (property_expression
+                object: (expression
+                  (primary_expression
+                    (identifier)))
+                property: (identifier)))))
+        body: (statement
+          (single_statement
+            (return_statement
+              value: (expression
+                (primary_expression
+                  (literal
+                    (object))))))))
+      (else_clause
+        body: (statement
+          (single_statement
+            (return_statement
+              value: (expression
+                (primary_expression
+                  (literal
+                    (object))))))))))
+  (statement
+    (for_statement
+      (for_clause
+        value: (identifier)
+        index: (identifier)
+        iterable: (expression
+          (primary_expression
+            (identifier))))
+      body: (statement
+        (single_statement
+          (expression
+            (assignment_expression
+              left: (postfix_expression
+                (property_expression
+                  object: (expression
+                    (primary_expression
+                      (identifier)))
+                  property: (identifier)))
+              right: (expression
+                (primary_expression
+                  (identifier)))))))))
+  (statement
+    (for_statement
+      (for_clause
+        value: (identifier)
+        start: (expression
+          (primary_expression
+            (literal
+              (number))))
+        end: (expression
+          (primary_expression
+            (last_index))))
+      body: (statement
+        (single_statement
+          (continue_statement)))))
+  (statement
+    (while_statement
+      (while_clause
+        label: (identifier)
+        condition: (condition
+          (expression
+            (binary_expression
+              left: (expression
+                (primary_expression
+                  (identifier)))
+              right: (expression
+                (primary_expression
+                  (literal
+                    (number))))))))
+      body: (statement
+        (single_statement
+          (break_statement
+            label: (identifier))))))
+  (statement
+    (fork_statement
+      (fork_clause
+        task: (identifier)
+        delay: (expression
+          (primary_expression
+            (literal
+              (number)))))
+      body: (statement
+        (single_statement
+          (expression
+            (primary_expression
+              (function_call
+                function: (identifier)
+                arguments: (argument_list
+                  (argument
+                    (expression
+                      (primary_expression
+                        (identifier))))
+                  (argument
+                    (expression
+                      (primary_expression
+                        (literal
+                          (string))))))))))))))
+
+================================================================================
+try handlers
+================================================================================
+
+try
+  risky();
+except err (E_PERM, E_INVARG)
+  return err;
+except (any)
+  return "fallback";
+endtry
+
+try
+  work();
+finally
+  cleanup();
+endtry
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (try_except_statement
+      body: (statement
+        (single_statement
+          (expression
+            (primary_expression
+              (function_call
+                function: (identifier))))))
+      (except_statement
+        (except_clause
+          name: (identifier)
+          codes: (exception_codes
+            (exception_code
+              (identifier))
+            (exception_code
+              (identifier))))
+        body: (statement
+          (single_statement
+            (return_statement
+              value: (expression
+                (primary_expression
+                  (identifier)))))))
+      (except_statement
+        (except_clause
+          codes: (exception_codes))
+        body: (statement
+          (single_statement
+            (return_statement
+              value: (expression
+                (primary_expression
+                  (literal
+                    (string))))))))))
+  (statement
+    (try_finally_statement
+      body: (statement
+        (single_statement
+          (expression
+            (primary_expression
+              (function_call
+                function: (identifier))))))
+      (finally_statement
+        body: (statement
+          (single_statement
+            (expression
+              (primary_expression
+                (function_call
+                  function: (identifier))))))))))

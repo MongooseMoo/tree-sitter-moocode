@@ -1,0 +1,211 @@
+================================================================================
+expression families
+================================================================================
+
+x = a || b && c |. d ^. e &. f == g << 1 + 2 * 3 ^ 4;
+value = condition ? a | b;
+result = `player.location ! E_PERM, E_INVARG => #-1';
+{values, ?optional = 3, @rest} = source;
+map = ["name" -> player.name, "ok" -> true];
+prop = obj.("dynamic").:waif[index..$];
+call = $notify(player, "hi");
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (expression
+        (assignment_expression
+          left: (identifier)
+          right: (expression
+            (binary_expression
+              left: (expression
+                (primary_expression
+                  (identifier)))
+              right: (expression
+                (binary_expression
+                  left: (expression
+                    (primary_expression
+                      (identifier)))
+                  right: (expression
+                    (binary_expression
+                      left: (expression
+                        (primary_expression
+                          (identifier)))
+                      right: (expression
+                        (binary_expression
+                          left: (expression
+                            (primary_expression
+                              (identifier)))
+                          right: (expression
+                            (binary_expression
+                              left: (expression
+                                (primary_expression
+                                  (identifier)))
+                              right: (expression
+                                (binary_expression
+                                  left: (expression
+                                    (primary_expression
+                                      (identifier)))
+                                  right: (expression
+                                    (binary_expression
+                                      left: (expression
+                                        (primary_expression
+                                          (identifier)))
+                                      right: (expression
+                                        (binary_expression
+                                          left: (expression
+                                            (primary_expression
+                                              (literal
+                                                (number))))
+                                          right: (expression
+                                            (binary_expression
+                                              left: (expression
+                                                (primary_expression
+                                                  (literal
+                                                    (number))))
+                                              right: (expression
+                                                (binary_expression
+                                                  left: (expression
+                                                    (primary_expression
+                                                      (literal
+                                                        (number))))
+                                                  right: (expression
+                                                    (primary_expression
+                                                      (literal
+                                                        (number))))))))))))))))))))))))))))
+  (statement
+    (single_statement
+      (expression
+        (assignment_expression
+          left: (identifier)
+          right: (expression
+            (ternary_expression
+              condition: (expression
+                (primary_expression
+                  (identifier)))
+              consequent: (expression
+                (primary_expression
+                  (identifier)))
+              alternate: (expression
+                (primary_expression
+                  (identifier)))))))))
+  (statement
+    (single_statement
+      (expression
+        (assignment_expression
+          left: (identifier)
+          right: (expression
+            (catch_expression
+              body: (expression
+                (postfix_expression
+                  (property_expression
+                    object: (expression
+                      (primary_expression
+                        (identifier)))
+                    property: (identifier))))
+              codes: (exception_codes
+                (exception_code
+                  (identifier))
+                (exception_code
+                  (identifier)))
+              default: (expression
+                (primary_expression
+                  (literal
+                    (object))))))))))
+  (statement
+    (single_statement
+      (expression
+        (scatter_assignment
+          target: (scatter_target
+            (scatter_target_item
+              (identifier))
+            (scatter_target_item
+              name: (identifier)
+              default: (expression
+                (primary_expression
+                  (literal
+                    (number)))))
+            (scatter_target_item
+              name: (identifier)))
+          right: (expression
+            (primary_expression
+              (identifier)))))))
+  (statement
+    (single_statement
+      (expression
+        (assignment_expression
+          left: (identifier)
+          right: (expression
+            (primary_expression
+              (literal
+                (map
+                  (map_entry
+                    key: (expression
+                      (primary_expression
+                        (literal
+                          (string))))
+                    value: (expression
+                      (postfix_expression
+                        (property_expression
+                          object: (expression
+                            (primary_expression
+                              (identifier)))
+                          property: (identifier)))))
+                  (map_entry
+                    key: (expression
+                      (primary_expression
+                        (literal
+                          (string))))
+                    value: (expression
+                      (primary_expression
+                        (literal
+                          (boolean)))))))))))))
+  (statement
+    (single_statement
+      (expression
+        (assignment_expression
+          left: (identifier)
+          right: (expression
+            (postfix_expression
+              (range_expression
+                object: (expression
+                  (postfix_expression
+                    (waif_property_expression
+                      object: (expression
+                        (postfix_expression
+                          (property_expression
+                            object: (expression
+                              (primary_expression
+                                (identifier)))
+                            property: (expression
+                              (primary_expression
+                                (literal
+                                  (string)))))))
+                      property: (identifier))))
+                start: (expression
+                  (primary_expression
+                    (identifier)))
+                end: (expression
+                  (primary_expression
+                    (last_index))))))))))
+  (statement
+    (single_statement
+      (expression
+        (assignment_expression
+          left: (identifier)
+          right: (expression
+            (primary_expression
+              (dollar_verb_call
+                verb: (identifier)
+                arguments: (argument_list
+                  (argument
+                    (expression
+                      (primary_expression
+                        (identifier))))
+                  (argument
+                    (expression
+                      (primary_expression
+                        (literal
+                          (string))))))))))))))
