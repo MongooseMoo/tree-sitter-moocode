@@ -25,7 +25,23 @@ seed used for the Monaco workstream. ToastStunt confirms:
 ```sh
 npm install
 npm run generate
+npm run build:wasm
 npm test
+```
+
+## Browser Parser
+
+The package includes `tree-sitter-moocode.wasm` for `web-tree-sitter` consumers:
+
+```js
+import { Language, Parser } from "web-tree-sitter";
+import mooWasmUrl from "tree-sitter-moocode/tree-sitter-moocode.wasm?url";
+
+await Parser.init();
+const language = await Language.load(mooWasmUrl);
+const parser = new Parser();
+parser.setLanguage(language);
+const tree = parser.parse(source);
 ```
 
 ## Current Scope
@@ -42,4 +58,3 @@ The first corpus covers the editor-critical parse surface:
 The grammar is intentionally permissive where ToastStunt performs semantic
 checks after parsing, such as validating legal assignment targets or legal `$`
 and `^` contexts.
-

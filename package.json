@@ -2,9 +2,30 @@
   "name": "tree-sitter-moocode",
   "version": "0.1.0",
   "description": "Tree-sitter grammar for LambdaMOO/ToastStunt MOO code.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ctoth/tree-sitter-moocode.git"
+  },
   "main": "grammar.js",
   "type": "commonjs",
+  "files": [
+    "grammar.js",
+    "tree-sitter.json",
+    "tree-sitter-moocode.wasm",
+    "queries",
+    "src",
+    "README.md"
+  ],
+  "exports": {
+    ".": "./grammar.js",
+    "./tree-sitter-moocode.wasm": "./tree-sitter-moocode.wasm",
+    "./queries/folds.scm": "./queries/folds.scm",
+    "./queries/highlights.scm": "./queries/highlights.scm",
+    "./queries/locals.scm": "./queries/locals.scm",
+    "./src/node-types.json": "./src/node-types.json"
+  },
   "scripts": {
+    "build:wasm": "tree-sitter build --wasm --output tree-sitter-moocode.wasm .",
     "generate": "tree-sitter generate",
     "test": "tree-sitter test",
     "parse": "tree-sitter parse"
@@ -30,4 +51,3 @@
     }
   ]
 }
-
