@@ -13,8 +13,10 @@
 (except_clause
   name: (identifier) @local.definition)
 
-(scatter_target_item
-  (identifier) @local.definition)
+(scatter_item
+  name: (identifier) @local.definition)
+
+(assignment_expression
+  left: (identifier) @local.definition)
 
 (identifier) @local.reference
-

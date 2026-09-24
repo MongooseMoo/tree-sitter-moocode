@@ -1,211 +1,310 @@
 ================================================================================
-expression families
+property access forms
 ================================================================================
 
-x = a || b && c |. d ^. e &. f == g << 1 + 2 * 3 ^ 4;
-value = condition ? a | b;
-result = `player.location ! E_PERM, E_INVARG => #-1';
-{values, ?optional = 3, @rest} = source;
-map = ["name" -> player.name, "ok" -> true];
-prop = obj.("dynamic").:waif[index..$];
-call = $notify(player, "hi");
+obj.name;
+obj.("computed");
+obj.:waif_prop;
+$system_prop;
 
 --------------------------------------------------------------------------------
 
 (source_file
   (statement
     (single_statement
-      (expression
-        (assignment_expression
-          left: (identifier)
-          right: (expression
-            (binary_expression
-              left: (expression
-                (primary_expression
-                  (identifier)))
-              right: (expression
-                (binary_expression
-                  left: (expression
-                    (primary_expression
-                      (identifier)))
-                  right: (expression
-                    (binary_expression
-                      left: (expression
-                        (primary_expression
-                          (identifier)))
-                      right: (expression
-                        (binary_expression
-                          left: (expression
-                            (primary_expression
-                              (identifier)))
-                          right: (expression
-                            (binary_expression
-                              left: (expression
-                                (primary_expression
-                                  (identifier)))
-                              right: (expression
-                                (binary_expression
-                                  left: (expression
-                                    (primary_expression
-                                      (identifier)))
-                                  right: (expression
-                                    (binary_expression
-                                      left: (expression
-                                        (primary_expression
-                                          (identifier)))
-                                      right: (expression
-                                        (binary_expression
-                                          left: (expression
-                                            (primary_expression
-                                              (literal
-                                                (number))))
-                                          right: (expression
-                                            (binary_expression
-                                              left: (expression
-                                                (primary_expression
-                                                  (literal
-                                                    (number))))
-                                              right: (expression
-                                                (binary_expression
-                                                  left: (expression
-                                                    (primary_expression
-                                                      (literal
-                                                        (number))))
-                                                  right: (expression
-                                                    (primary_expression
-                                                      (literal
-                                                        (number))))))))))))))))))))))))))))
+      (property_expression
+        (identifier)
+        (identifier))))
   (statement
     (single_statement
-      (expression
-        (assignment_expression
-          left: (identifier)
-          right: (expression
-            (ternary_expression
-              condition: (expression
-                (primary_expression
-                  (identifier)))
-              consequent: (expression
-                (primary_expression
-                  (identifier)))
-              alternate: (expression
-                (primary_expression
-                  (identifier)))))))))
+      (property_expression
+        (identifier)
+        (parenthesized_expression
+          (string)))))
   (statement
     (single_statement
-      (expression
-        (assignment_expression
-          left: (identifier)
-          right: (expression
-            (catch_expression
-              body: (expression
-                (postfix_expression
-                  (property_expression
-                    object: (expression
-                      (primary_expression
-                        (identifier)))
-                    property: (identifier))))
-              codes: (exception_codes
-                (exception_code
-                  (identifier))
-                (exception_code
-                  (identifier)))
-              default: (expression
-                (primary_expression
-                  (literal
-                    (object))))))))))
+      (waif_property_expression
+        (identifier)
+        (identifier))))
   (statement
     (single_statement
-      (expression
-        (scatter_assignment
-          target: (scatter_target
-            (scatter_target_item
+      (dollar_property
+        (identifier)))))
+
+================================================================================
+verb call forms
+================================================================================
+
+obj:verb(1, @args);
+obj:(name)();
+$util:helper();
+$sys_verb("x");
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (verb_call_expression
+        (identifier)
+        (identifier)
+        (arguments
+          (integer)
+          (splice
+            (identifier))))))
+  (statement
+    (single_statement
+      (verb_call_expression
+        (identifier)
+        (parenthesized_expression
+          (identifier))
+        (arguments))))
+  (statement
+    (single_statement
+      (verb_call_expression
+        (dollar_property
+          (identifier))
+        (identifier)
+        (arguments))))
+  (statement
+    (single_statement
+      (dollar_verb_call
+        (identifier)
+        (arguments
+          (string))))))
+
+================================================================================
+builtin function call
+================================================================================
+
+notify(player, tostr("n = ", n));
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (function_call
+        (identifier)
+        (arguments
+          (identifier)
+          (function_call
+            (identifier)
+            (arguments
+              (string)
+              (identifier))))))))
+
+================================================================================
+index, range, first and last
+================================================================================
+
+x[1];
+x[^..$];
+x[$ - 1];
+{1, 2, 3}[2];
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (index_expression
+        (identifier)
+        (integer))))
+  (statement
+    (single_statement
+      (range_expression
+        (identifier)
+        (first_index)
+        (last_index))))
+  (statement
+    (single_statement
+      (index_expression
+        (identifier)
+        (binary_expression
+          (last_index)
+          (integer)))))
+  (statement
+    (single_statement
+      (index_expression
+        (list
+          (integer)
+          (integer)
+          (integer))
+        (integer)))))
+
+================================================================================
+assignment targets
+================================================================================
+
+x = 1;
+$flag = 0;
+obj.prop = 2;
+obj.:wp = 3;
+x[1] = 4;
+x[1..2] = {};
+x.a[2].b = 5;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (assignment_expression
+        (identifier)
+        (integer))))
+  (statement
+    (single_statement
+      (assignment_expression
+        (dollar_property
+          (identifier))
+        (integer))))
+  (statement
+    (single_statement
+      (assignment_expression
+        (property_expression
+          (identifier)
+          (identifier))
+        (integer))))
+  (statement
+    (single_statement
+      (assignment_expression
+        (waif_property_expression
+          (identifier)
+          (identifier))
+        (integer))))
+  (statement
+    (single_statement
+      (assignment_expression
+        (index_expression
+          (identifier)
+          (integer))
+        (integer))))
+  (statement
+    (single_statement
+      (assignment_expression
+        (range_expression
+          (identifier)
+          (integer)
+          (integer))
+        (list))))
+  (statement
+    (single_statement
+      (assignment_expression
+        (property_expression
+          (index_expression
+            (property_expression
+              (identifier)
               (identifier))
-            (scatter_target_item
-              name: (identifier)
-              default: (expression
-                (primary_expression
-                  (literal
-                    (number)))))
-            (scatter_target_item
-              name: (identifier)))
-          right: (expression
-            (primary_expression
-              (identifier)))))))
+            (integer))
+          (identifier))
+        (integer)))))
+
+================================================================================
+scatter assignment
+================================================================================
+
+{a, ?b, ?c = 3, @rest} = args;
+{error, ?message = ""} = args;
+
+--------------------------------------------------------------------------------
+
+(source_file
   (statement
     (single_statement
-      (expression
-        (assignment_expression
-          left: (identifier)
-          right: (expression
-            (primary_expression
-              (literal
-                (map
-                  (map_entry
-                    key: (expression
-                      (primary_expression
-                        (literal
-                          (string))))
-                    value: (expression
-                      (postfix_expression
-                        (property_expression
-                          object: (expression
-                            (primary_expression
-                              (identifier)))
-                          property: (identifier)))))
-                  (map_entry
-                    key: (expression
-                      (primary_expression
-                        (literal
-                          (string))))
-                    value: (expression
-                      (primary_expression
-                        (literal
-                          (boolean)))))))))))))
+      (scatter_assignment
+        (scatter_item
+          (identifier))
+        (scatter_item
+          (identifier))
+        (scatter_item
+          (identifier)
+          (integer))
+        (scatter_item
+          (identifier))
+        (identifier))))
   (statement
     (single_statement
-      (expression
-        (assignment_expression
-          left: (identifier)
-          right: (expression
-            (postfix_expression
-              (range_expression
-                object: (expression
-                  (postfix_expression
-                    (waif_property_expression
-                      object: (expression
-                        (postfix_expression
-                          (property_expression
-                            object: (expression
-                              (primary_expression
-                                (identifier)))
-                            property: (expression
-                              (primary_expression
-                                (literal
-                                  (string)))))))
-                      property: (identifier))))
-                start: (expression
-                  (primary_expression
-                    (identifier)))
-                end: (expression
-                  (primary_expression
-                    (last_index))))))))))
+      (scatter_assignment
+        (scatter_item
+          (identifier))
+        (scatter_item
+          (identifier)
+          (string))
+        (identifier)))))
+
+================================================================================
+list is not a scatter without =
+================================================================================
+
+return {a, @b};
+
+--------------------------------------------------------------------------------
+
+(source_file
   (statement
     (single_statement
-      (expression
+      (return_statement
+        (list
+          (identifier)
+          (splice
+            (identifier)))))))
+
+================================================================================
+catch expressions
+================================================================================
+
+`x.y ! ANY';
+`x.y ! E_PERM, E_PROPNF => 0';
+`o:(v)() ! 1';
+`f() ! @codes => default';
+`$prop = this ! any';
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (catch_expression
+        (property_expression
+          (identifier)
+          (identifier))
+        (exception_codes))))
+  (statement
+    (single_statement
+      (catch_expression
+        (property_expression
+          (identifier)
+          (identifier))
+        (exception_codes
+          (error_code)
+          (error_code))
+        (integer))))
+  (statement
+    (single_statement
+      (catch_expression
+        (verb_call_expression
+          (identifier)
+          (parenthesized_expression
+            (identifier))
+          (arguments))
+        (exception_codes
+          (integer)))))
+  (statement
+    (single_statement
+      (catch_expression
+        (function_call
+          (identifier)
+          (arguments))
+        (exception_codes
+          (splice
+            (identifier)))
+        (identifier))))
+  (statement
+    (single_statement
+      (catch_expression
         (assignment_expression
-          left: (identifier)
-          right: (expression
-            (primary_expression
-              (dollar_verb_call
-                verb: (identifier)
-                arguments: (argument_list
-                  (argument
-                    (expression
-                      (primary_expression
-                        (identifier))))
-                  (argument
-                    (expression
-                      (primary_expression
-                        (literal
-                          (string))))))))))))))
+          (dollar_property
+            (identifier))
+          (identifier))
+        (exception_codes)))))

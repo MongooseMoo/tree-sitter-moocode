@@ -1,0 +1,278 @@
+================================================================================
+|| and && share one precedence level and associate left
+================================================================================
+
+a || b && c;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (binary_expression
+        (binary_expression
+          (identifier)
+          (identifier))
+        (identifier)))))
+
+================================================================================
+&& then || also groups left
+================================================================================
+
+a && b || c;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (binary_expression
+        (binary_expression
+          (identifier)
+          (identifier))
+        (identifier)))))
+
+================================================================================
+comparison binds looser than bitwise operators
+================================================================================
+
+a < b |. c;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (binary_expression
+        (identifier)
+        (binary_expression
+          (identifier)
+          (identifier))))))
+
+================================================================================
+bitwise operators share one level and associate left
+================================================================================
+
+a |. b &. c ^. d;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (binary_expression
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier))
+        (identifier)))))
+
+================================================================================
+logical binds looser than comparison
+================================================================================
+
+a == b && c != d;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (binary_expression
+        (binary_expression
+          (identifier)
+          (identifier))
+        (binary_expression
+          (identifier)
+          (identifier))))))
+
+================================================================================
+in is a comparison operator
+================================================================================
+
+x in y == z;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (binary_expression
+        (binary_expression
+          (identifier)
+          (identifier))
+        (identifier)))))
+
+================================================================================
+shift binds tighter than bitwise and looser than additive
+================================================================================
+
+a |. b << c + d;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (binary_expression
+        (identifier)
+        (binary_expression
+          (identifier)
+          (binary_expression
+            (identifier)
+            (identifier)))))))
+
+================================================================================
+multiplicative binds tighter than additive
+================================================================================
+
+a + b * c - d % e;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (binary_expression
+        (binary_expression
+          (identifier)
+          (binary_expression
+            (identifier)
+            (identifier)))
+        (binary_expression
+          (identifier)
+          (identifier))))))
+
+================================================================================
+exponent is right associative
+================================================================================
+
+a ^ b ^ c;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (binary_expression
+        (identifier)
+        (binary_expression
+          (identifier)
+          (identifier))))))
+
+================================================================================
+unary minus binds tighter than exponent
+================================================================================
+
+-a ^ b;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (binary_expression
+        (unary_expression
+          (identifier))
+        (identifier)))))
+
+================================================================================
+not binds tighter than exponent
+================================================================================
+
+!a ^ b;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (binary_expression
+        (unary_expression
+          (identifier))
+        (identifier)))))
+
+================================================================================
+postfix binds tighter than unary
+================================================================================
+
+!player.wizard;
+-x[1];
+~o:v();
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (unary_expression
+        (property_expression
+          (identifier)
+          (identifier)))))
+  (statement
+    (single_statement
+      (unary_expression
+        (index_expression
+          (identifier)
+          (integer)))))
+  (statement
+    (single_statement
+      (unary_expression
+        (verb_call_expression
+          (identifier)
+          (identifier)
+          (arguments))))))
+
+================================================================================
+ternary binds looser than ||
+================================================================================
+
+a || b ? c | d;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (ternary_expression
+        (binary_expression
+          (identifier)
+          (identifier))
+        (identifier)
+        (identifier)))))
+
+================================================================================
+assignment binds looser than ternary and is right associative
+================================================================================
+
+a = b = c ? d | e;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (assignment_expression
+        (identifier)
+        (assignment_expression
+          (identifier)
+          (ternary_expression
+            (identifier)
+            (identifier)
+            (identifier)))))))
+
+================================================================================
+subtraction without spaces is not a negative literal
+================================================================================
+
+x-1;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (binary_expression
+        (identifier)
+        (integer)))))

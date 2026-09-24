@@ -1,12 +1,13 @@
 ================================================================================
-single statements
+simple statements
 ================================================================================
 
 return player.location;
+return;
 break outer;
 continue;
-player:tell("ok");
 ;
+"string statements are the conventional comment";
 
 --------------------------------------------------------------------------------
 
@@ -14,65 +15,36 @@ player:tell("ok");
   (statement
     (single_statement
       (return_statement
-        value: (expression
-          (postfix_expression
-            (property_expression
-              object: (expression
-                (primary_expression
-                  (identifier)))
-              property: (identifier)))))))
+        (property_expression
+          (identifier)
+          (identifier)))))
+  (statement
+    (single_statement
+      (return_statement)))
   (statement
     (single_statement
       (break_statement
-        label: (identifier))))
+        (identifier))))
   (statement
     (single_statement
       (continue_statement)))
   (statement
-    (single_statement
-      (expression
-        (postfix_expression
-          (verb_call_expression
-            object: (expression
-              (primary_expression
-                (identifier)))
-            verb: (identifier)
-            arguments: (argument_list
-              (argument
-                (expression
-                  (primary_expression
-                    (literal
-                      (string)))))))))))
+    (single_statement))
   (statement
-    (single_statement)))
+    (single_statement
+      (string))))
 
 ================================================================================
-conditionals and loops
+if elseif else
 ================================================================================
 
 if (player in connected_players())
-  player:tell("connected");
+  x = 1;
 elseif (player.wizard)
-  return #0;
+  x = 2;
 else
-  return #-1;
+  x = 3;
 endif
-
-for item, index in (items)
-  item.name = index;
-endfor
-
-for i in [1..$]
-  continue;
-endfor
-
-while outer (ticks > 0)
-  break outer;
-endwhile
-
-fork worker (5)
-  notify(player, "done");
-endfork
 
 --------------------------------------------------------------------------------
 
@@ -80,147 +52,114 @@ endfork
   (statement
     (if_statement
       (if_clause
-        condition: (condition
-          (expression
-            (binary_expression
-              left: (expression
-                (primary_expression
-                  (identifier)))
-              right: (expression
-                (primary_expression
-                  (function_call
-                    function: (identifier)))))))
-        body: (statement
+        (condition
+          (binary_expression
+            (identifier)
+            (function_call
+              (identifier)
+              (arguments))))
+        (statement
           (single_statement
-            (expression
-              (postfix_expression
-                (verb_call_expression
-                  object: (expression
-                    (primary_expression
-                      (identifier)))
-                  verb: (identifier)
-                  arguments: (argument_list
-                    (argument
-                      (expression
-                        (primary_expression
-                          (literal
-                            (string))))))))))))
-      (elseif_clause
-        condition: (condition
-          (expression
-            (postfix_expression
-              (property_expression
-                object: (expression
-                  (primary_expression
-                    (identifier)))
-                property: (identifier)))))
-        body: (statement
-          (single_statement
-            (return_statement
-              value: (expression
-                (primary_expression
-                  (literal
-                    (object))))))))
-      (else_clause
-        body: (statement
-          (single_statement
-            (return_statement
-              value: (expression
-                (primary_expression
-                  (literal
-                    (object))))))))))
-  (statement
-    (for_statement
-      (for_clause
-        value: (identifier)
-        index: (identifier)
-        iterable: (expression
-          (primary_expression
-            (identifier))))
-      body: (statement
-        (single_statement
-          (expression
             (assignment_expression
-              left: (postfix_expression
-                (property_expression
-                  object: (expression
-                    (primary_expression
-                      (identifier)))
-                  property: (identifier)))
-              right: (expression
-                (primary_expression
-                  (identifier)))))))))
+              (identifier)
+              (integer)))))
+      (elseif_clause
+        (condition
+          (property_expression
+            (identifier)
+            (identifier)))
+        (statement
+          (single_statement
+            (assignment_expression
+              (identifier)
+              (integer)))))
+      (else_clause
+        (statement
+          (single_statement
+            (assignment_expression
+              (identifier)
+              (integer))))))))
+
+================================================================================
+for loops
+================================================================================
+
+for item in (items)
+endfor
+for value, key in (map)
+endfor
+for i in [1..$]
+endfor
+
+--------------------------------------------------------------------------------
+
+(source_file
   (statement
     (for_statement
       (for_clause
-        value: (identifier)
-        start: (expression
-          (primary_expression
-            (literal
-              (number))))
-        end: (expression
-          (primary_expression
-            (last_index))))
-      body: (statement
-        (single_statement
-          (continue_statement)))))
+        (identifier)
+        (identifier))))
+  (statement
+    (for_statement
+      (for_clause
+        (identifier)
+        (identifier)
+        (identifier))))
+  (statement
+    (for_statement
+      (for_clause
+        (identifier)
+        (integer)
+        (last_index)))))
+
+================================================================================
+while and fork with labels
+================================================================================
+
+while outer (1)
+  break outer;
+endwhile
+fork task (0)
+  suspend(0);
+endfork
+
+--------------------------------------------------------------------------------
+
+(source_file
   (statement
     (while_statement
       (while_clause
-        label: (identifier)
-        condition: (condition
-          (expression
-            (binary_expression
-              left: (expression
-                (primary_expression
-                  (identifier)))
-              right: (expression
-                (primary_expression
-                  (literal
-                    (number))))))))
-      body: (statement
+        (identifier)
+        (condition
+          (integer)))
+      (statement
         (single_statement
           (break_statement
-            label: (identifier))))))
+            (identifier))))))
   (statement
     (fork_statement
       (fork_clause
-        task: (identifier)
-        delay: (expression
-          (primary_expression
-            (literal
-              (number)))))
-      body: (statement
+        (identifier)
+        (integer))
+      (statement
         (single_statement
-          (expression
-            (primary_expression
-              (function_call
-                function: (identifier)
-                arguments: (argument_list
-                  (argument
-                    (expression
-                      (primary_expression
-                        (identifier))))
-                  (argument
-                    (expression
-                      (primary_expression
-                        (literal
-                          (string))))))))))))))
+          (function_call
+            (identifier)
+            (arguments
+              (integer))))))))
 
 ================================================================================
-try handlers
+try except and finally
 ================================================================================
 
 try
   risky();
 except err (E_PERM, E_INVARG)
-  return err;
-except (any)
-  return "fallback";
+  x = err;
+except (ANY)
 endtry
-
 try
-  work();
+  risky();
 finally
   cleanup();
 endtry
@@ -230,48 +169,60 @@ endtry
 (source_file
   (statement
     (try_except_statement
-      body: (statement
+      (statement
         (single_statement
-          (expression
-            (primary_expression
-              (function_call
-                function: (identifier))))))
+          (function_call
+            (identifier)
+            (arguments))))
       (except_statement
         (except_clause
-          name: (identifier)
-          codes: (exception_codes
-            (exception_code
-              (identifier))
-            (exception_code
-              (identifier))))
-        body: (statement
+          (identifier)
+          (exception_codes
+            (error_code)
+            (error_code)))
+        (statement
           (single_statement
-            (return_statement
-              value: (expression
-                (primary_expression
-                  (identifier)))))))
+            (assignment_expression
+              (identifier)
+              (identifier)))))
       (except_statement
         (except_clause
-          codes: (exception_codes))
-        body: (statement
-          (single_statement
-            (return_statement
-              value: (expression
-                (primary_expression
-                  (literal
-                    (string))))))))))
+          (exception_codes)))))
   (statement
     (try_finally_statement
-      body: (statement
+      (statement
         (single_statement
-          (expression
-            (primary_expression
-              (function_call
-                function: (identifier))))))
+          (function_call
+            (identifier)
+            (arguments))))
       (finally_statement
-        body: (statement
+        (statement
           (single_statement
-            (expression
-              (primary_expression
-                (function_call
-                  function: (identifier))))))))))
+            (function_call
+              (identifier)
+              (arguments))))))))
+
+================================================================================
+keywords are case-insensitive
+================================================================================
+
+IF (x)
+  RETURN E_PERM;
+ElseIf (y)
+ENDIF
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (if_statement
+      (if_clause
+        (condition
+          (identifier))
+        (statement
+          (single_statement
+            (return_statement
+              (error_code)))))
+      (elseif_clause
+        (condition
+          (identifier))))))
