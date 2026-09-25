@@ -1,0 +1,97 @@
+name: Release
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/release.yml
+      - .github/workflows/ci.yml
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+      - name: Validate stable release tag and main ancestry
+        if: github.event_name == 'push'
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { readFileSync } from 'node:fs';
+          const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
+          const lock = JSON.parse(readFileSync('package-lock.json', 'utf8'));
+          const ts = JSON.parse(readFileSync('tree-sitter.json', 'utf8'));
+          assert.match(process.env.RELEASE_TAG, /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/);
+          assert.equal(pkg.name, 'tree-sitter-moocode');
+          assert.equal(process.env.RELEASE_TAG, `v${pkg.version}`);
+          assert.equal(lock.version, pkg.version);
+          assert.equal(lock.packages[''].version, pkg.version);
+          assert.equal(ts.metadata.version, pkg.version);
+          NODE
+          git merge-base --is-ancestor HEAD origin/main
+
+  check:
+    needs: validate
+    uses: ./.github/workflows/ci.yml
+
+  publish:
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          cache: npm
+      - run: npm ci
+      - name: Build browser parser from the tagged grammar
+        run: npm run build:wasm
+      - name: Pack release artifact
+        run: npm pack --pack-destination "$RUNNER_TEMP"
+      - name: Publish to npm with provenance
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: npm publish "$RUNNER_TEMP/tree-sitter-moocode-${RELEASE_TAG#v}.tgz" --provenance --access public
+      - name: Verify registry artifact
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/tree-sitter-moocode-${RELEASE_TAG#v}.tgz"
+          expected="sha512-$(openssl dgst -sha512 -binary "$archive" | openssl base64 -A)"
+          for attempt in {1..12}; do
+            actual=$(npm view "tree-sitter-moocode@${RELEASE_TAG#v}" dist.integrity 2>/dev/null || true)
+            if [ "$actual" = "$expected" ]; then
+              exit 0
+            fi
+            sleep 5
+          done
+          echo 'Registry integrity does not match the release artifact.' >&2
+          exit 1
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: gh release create "$RELEASE_TAG" --verify-tag --generate-notes

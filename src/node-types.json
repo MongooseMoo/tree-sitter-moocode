@@ -1,40 +1,124 @@
 [
   {
-    "type": "argument",
+    "type": "_expression",
     "named": true,
-    "fields": {
-      "value": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "expression",
-            "named": true
-          }
-        ]
+    "subtypes": [
+      {
+        "type": "assignment_expression",
+        "named": true
+      },
+      {
+        "type": "binary_expression",
+        "named": true
+      },
+      {
+        "type": "catch_expression",
+        "named": true
+      },
+      {
+        "type": "dollar_property",
+        "named": true
+      },
+      {
+        "type": "dollar_verb_call",
+        "named": true
+      },
+      {
+        "type": "error_code",
+        "named": true
+      },
+      {
+        "type": "first_index",
+        "named": true
+      },
+      {
+        "type": "float",
+        "named": true
+      },
+      {
+        "type": "function_call",
+        "named": true
+      },
+      {
+        "type": "identifier",
+        "named": true
+      },
+      {
+        "type": "index_expression",
+        "named": true
+      },
+      {
+        "type": "integer",
+        "named": true
+      },
+      {
+        "type": "last_index",
+        "named": true
+      },
+      {
+        "type": "list",
+        "named": true
+      },
+      {
+        "type": "map",
+        "named": true
+      },
+      {
+        "type": "object",
+        "named": true
+      },
+      {
+        "type": "parenthesized_expression",
+        "named": true
+      },
+      {
+        "type": "property_expression",
+        "named": true
+      },
+      {
+        "type": "range_expression",
+        "named": true
+      },
+      {
+        "type": "scatter_assignment",
+        "named": true
+      },
+      {
+        "type": "string",
+        "named": true
+      },
+      {
+        "type": "ternary_expression",
+        "named": true
+      },
+      {
+        "type": "unary_expression",
+        "named": true
+      },
+      {
+        "type": "verb_call_expression",
+        "named": true
+      },
+      {
+        "type": "waif_property_expression",
+        "named": true
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "expression",
-          "named": true
-        }
-      ]
-    }
+    ]
   },
   {
-    "type": "argument_list",
+    "type": "arguments",
     "named": true,
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
-          "type": "argument",
+          "type": "_expression",
+          "named": true
+        },
+        {
+          "type": "splice",
           "named": true
         }
       ]
@@ -49,11 +133,27 @@
         "required": true,
         "types": [
           {
+            "type": "dollar_property",
+            "named": true
+          },
+          {
             "type": "identifier",
             "named": true
           },
           {
-            "type": "postfix_expression",
+            "type": "index_expression",
+            "named": true
+          },
+          {
+            "type": "property_expression",
+            "named": true
+          },
+          {
+            "type": "range_expression",
+            "named": true
+          },
+          {
+            "type": "waif_property_expression",
             "named": true
           }
         ]
@@ -63,7 +163,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -79,7 +179,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -175,17 +275,12 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
       }
     }
-  },
-  {
-    "type": "boolean",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "break_statement",
@@ -212,7 +307,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -232,7 +327,7 @@
         "required": false,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -248,7 +343,7 @@
       "required": true,
       "types": [
         {
-          "type": "expression",
+          "type": "_expression",
           "named": true
         }
       ]
@@ -292,30 +387,18 @@
     "fields": {
       "arguments": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
-            "type": "argument_list",
+            "type": "arguments",
             "named": true
           }
         ]
       },
       "verb": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "(",
-            "named": false
-          },
-          {
-            "type": ")",
-            "named": false
-          },
-          {
-            "type": "expression",
-            "named": true
-          },
           {
             "type": "identifier",
             "named": true
@@ -419,92 +502,19 @@
     }
   },
   {
-    "type": "exception_code",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "exception_codes",
     "named": true,
-    "fields": {
-      "value": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "expression",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
       "required": false,
       "types": [
         {
-          "type": "exception_code",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "expression",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "assignment_expression",
+          "type": "_expression",
           "named": true
         },
         {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "catch_expression",
-          "named": true
-        },
-        {
-          "type": "postfix_expression",
-          "named": true
-        },
-        {
-          "type": "primary_expression",
-          "named": true
-        },
-        {
-          "type": "scatter_assignment",
-          "named": true
-        },
-        {
-          "type": "splice_expression",
-          "named": true
-        },
-        {
-          "type": "ternary_expression",
-          "named": true
-        },
-        {
-          "type": "unary_expression",
+          "type": "splice",
           "named": true
         }
       ]
@@ -540,7 +550,7 @@
         "required": false,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -560,7 +570,7 @@
         "required": false,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -570,7 +580,7 @@
         "required": false,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -622,7 +632,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -671,10 +681,10 @@
     "fields": {
       "arguments": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
-            "type": "argument_list",
+            "type": "arguments",
             "named": true
           }
         ]
@@ -749,7 +759,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -759,7 +769,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -774,53 +784,17 @@
   {
     "type": "list",
     "named": true,
-    "fields": {
-      "items": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "argument_list",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "literal",
-    "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
         {
-          "type": "boolean",
+          "type": "_expression",
           "named": true
         },
         {
-          "type": "float",
-          "named": true
-        },
-        {
-          "type": "list",
-          "named": true
-        },
-        {
-          "type": "map",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "object",
-          "named": true
-        },
-        {
-          "type": "string",
+          "type": "splice",
           "named": true
         }
       ]
@@ -850,7 +824,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -860,7 +834,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -868,7 +842,7 @@
     }
   },
   {
-    "type": "postfix_expression",
+    "type": "parenthesized_expression",
     "named": true,
     "fields": {},
     "children": {
@@ -876,66 +850,7 @@
       "required": true,
       "types": [
         {
-          "type": "index_expression",
-          "named": true
-        },
-        {
-          "type": "property_expression",
-          "named": true
-        },
-        {
-          "type": "range_expression",
-          "named": true
-        },
-        {
-          "type": "verb_call_expression",
-          "named": true
-        },
-        {
-          "type": "waif_property_expression",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "primary_expression",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "dollar_property",
-          "named": true
-        },
-        {
-          "type": "dollar_verb_call",
-          "named": true
-        },
-        {
-          "type": "expression",
-          "named": true
-        },
-        {
-          "type": "first_index",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "last_index",
-          "named": true
-        },
-        {
-          "type": "literal",
+          "type": "_expression",
           "named": true
         }
       ]
@@ -950,29 +865,21 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
       },
       "property": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "(",
-            "named": false
-          },
-          {
-            "type": ")",
-            "named": false
-          },
-          {
-            "type": "expression",
+            "type": "identifier",
             "named": true
           },
           {
-            "type": "identifier",
+            "type": "parenthesized_expression",
             "named": true
           }
         ]
@@ -988,7 +895,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -998,7 +905,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1008,7 +915,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1024,7 +931,7 @@
         "required": false,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1040,40 +947,25 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
-            "named": true
-          }
-        ]
-      },
-      "target": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "scatter_target",
+            "type": "_expression",
             "named": true
           }
         ]
       }
-    }
-  },
-  {
-    "type": "scatter_target",
-    "named": true,
-    "fields": {},
+    },
     "children": {
       "multiple": true,
       "required": true,
       "types": [
         {
-          "type": "scatter_target_item",
+          "type": "scatter_item",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "scatter_target_item",
+    "type": "scatter_item",
     "named": true,
     "fields": {
       "default": {
@@ -1081,14 +973,14 @@
         "required": false,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
       },
       "name": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "identifier",
@@ -1096,16 +988,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -1117,15 +999,15 @@
       "required": false,
       "types": [
         {
+          "type": "_expression",
+          "named": true
+        },
+        {
           "type": "break_statement",
           "named": true
         },
         {
           "type": "continue_statement",
-          "named": true
-        },
-        {
-          "type": "expression",
           "named": true
         },
         {
@@ -1152,7 +1034,7 @@
     }
   },
   {
-    "type": "splice_expression",
+    "type": "splice",
     "named": true,
     "fields": {
       "value": {
@@ -1160,7 +1042,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1215,7 +1097,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1225,7 +1107,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1235,7 +1117,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1303,7 +1185,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1334,10 +1216,10 @@
     "fields": {
       "arguments": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
-            "type": "argument_list",
+            "type": "arguments",
             "named": true
           }
         ]
@@ -1347,29 +1229,21 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
       },
       "verb": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "(",
-            "named": false
-          },
-          {
-            "type": ")",
-            "named": false
-          },
-          {
-            "type": "expression",
+            "type": "identifier",
             "named": true
           },
           {
-            "type": "identifier",
+            "type": "parenthesized_expression",
             "named": true
           }
         ]
@@ -1385,7 +1259,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1519,10 +1393,6 @@
     "named": false
   },
   {
-    "type": ".:",
-    "named": false
-  },
-  {
     "type": "/",
     "named": false
   },
@@ -1579,6 +1449,10 @@
     "named": false
   },
   {
+    "type": "ANY",
+    "named": false
+  },
+  {
     "type": "[",
     "named": false
   },
@@ -1596,10 +1470,6 @@
   },
   {
     "type": "`",
-    "named": false
-  },
-  {
-    "type": "any",
     "named": false
   },
   {
@@ -1644,15 +1514,11 @@
     "named": false
   },
   {
-    "type": "error",
-    "named": false
+    "type": "error_code",
+    "named": true
   },
   {
     "type": "except",
-    "named": false
-  },
-  {
-    "type": "false",
     "named": false
   },
   {
@@ -1684,7 +1550,7 @@
     "named": false
   },
   {
-    "type": "number",
+    "type": "integer",
     "named": true
   },
   {
@@ -1698,10 +1564,6 @@
   {
     "type": "string",
     "named": true
-  },
-  {
-    "type": "true",
-    "named": false
   },
   {
     "type": "try",
