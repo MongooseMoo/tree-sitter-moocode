@@ -255,6 +255,12 @@ function makeUnparser(fully) {
         }
         return;
       }
+      case "line_comment": {
+        // What the core's `//` rewrite hands the compiler: `"text";`.
+        const text = node.text.slice(2).replace(/^ /, "");
+        out.push(`"${text.replace(/[\\"]/g, "\\$&")}";`);
+        return;
+      }
       case "if_statement":
         for (const clause of named(node)) {
           if (clause.type === "if_clause") out.push(`if (${cond(clause)})`);

@@ -1070,6 +1070,10 @@
           "named": true
         },
         {
+          "type": "line_comment",
+          "named": true
+        },
+        {
           "type": "single_statement",
           "named": true
         },
@@ -1551,6 +1555,10 @@
   },
   {
     "type": "integer",
+    "named": true
+  },
+  {
+    "type": "line_comment",
     "named": true
   },
   {
