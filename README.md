@@ -22,7 +22,13 @@ wrong, and that this grammar follows the server on:
   keywords. `true`, `false` and `error` are *not*; they are ordinary names.
 - **Numbers carry no sign.** `x-1` is a subtraction. Floats include exponent
   forms such as `1e-09` and `1E+15`.
-- **Comments** are `/* ... */` only. `//` is not a comment to the server.
+- **Comments** are `/* ... */` only as far as the server is concerned. Many
+  cores add a `//_comments` programmer option that rewrites a line holding only
+  `// text` into the statement `"text";` before compiling, so the grammar
+  accepts `//` comments as a `line_comment` node wherever a statement can go.
+  The rewrite leaves a `//` that follows code on the same line alone, so the
+  server rejects it; check that a `line_comment` starts its line (only
+  whitespace before it) if you need to flag that.
 - **Catch expressions** accept any argument list as codes, e.g. `` `x ! @codes' ``.
 - `@` splices are only allowed in argument lists, lists and scatter targets.
 

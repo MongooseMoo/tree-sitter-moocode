@@ -32,6 +32,7 @@
   (#match? @variable.builtin "^(player|this|caller|verb|args|argstr|dobj|dobjstr|prepstr|iobj|iobjstr|INT|NUM|FLOAT|OBJ|STR|LIST|ERR|MAP|BOOL|ANON|WAIF)$"))
 
 (comment) @comment
+(line_comment) @comment
 (string) @string
 (integer) @number
 (float) @number

@@ -1,4 +1,54 @@
 ================================================================================
+line comments are statements
+================================================================================
+
+// leading comment
+if (x)
+  // indented comment
+  y = 1; // trailing, which the core rewrite does not accept
+endif
+//
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (line_comment))
+  (statement
+    (if_statement
+      (if_clause
+        (condition
+          (identifier))
+        (statement
+          (line_comment))
+        (statement
+          (single_statement
+            (assignment_expression
+              (identifier)
+              (integer))))
+        (statement
+          (line_comment)))))
+  (statement
+    (line_comment)))
+
+================================================================================
+division is not a line comment
+================================================================================
+
+x = a / b;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (statement
+    (single_statement
+      (assignment_expression
+        (identifier)
+        (binary_expression
+          (identifier)
+          (identifier))))))
+
+================================================================================
 simple statements
 ================================================================================
 

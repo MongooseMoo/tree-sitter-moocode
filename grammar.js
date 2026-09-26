@@ -75,7 +75,17 @@ module.exports = grammar({
         $.fork_statement,
         $.try_except_statement,
         $.try_finally_statement,
+        $.line_comment,
       ),
+
+    // Not server syntax. LambdaCore-derived cores (ToastCore, and others via
+    // $code_utils / simpleedit's `//_comments` programmer option) rewrite a
+    // line that is only `// text` into the string statement `"text";` before
+    // compiling. Only statement position is accepted here because the rewrite
+    // turns the line into a statement; a `//` after code on the same line is
+    // left alone by that rewrite and fails to compile, which consumers can
+    // detect from the node's start column.
+    line_comment: () => token(seq("//", /[^\n]*/)),
 
     single_statement: ($) =>
       seq(
