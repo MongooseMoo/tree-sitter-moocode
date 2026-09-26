@@ -81,12 +81,14 @@ jobs:
           set -euo pipefail
           archive="$RUNNER_TEMP/tree-sitter-moocode-${RELEASE_TAG#v}.tgz"
           expected="sha512-$(openssl dgst -sha512 -binary "$archive" | openssl base64 -A)"
-          for attempt in {1..12}; do
+          # npm now processes new versions before serving them ("may take a few
+          # minutes to become available"); v0.2.0 was not visible after 60s.
+          for attempt in {1..60}; do
             actual=$(npm view "tree-sitter-moocode@${RELEASE_TAG#v}" dist.integrity 2>/dev/null || true)
             if [ "$actual" = "$expected" ]; then
               exit 0
             fi
-            sleep 5
+            sleep 10
           done
           echo 'Registry integrity does not match the release artifact.' >&2
           exit 1
