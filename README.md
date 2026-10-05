@@ -39,6 +39,35 @@ condition or alternate. It also does not lex `1.` (digits and a trailing dot)
 as a float, because tree-sitter has no lookahead to tell it apart from `1..2`.
 The server always writes such values back as `1.0`.
 
+## Built-in variables
+
+The server predefines a set of variables in every verb before any code runs:
+the type constants (`NUM`, `OBJ`, `STR`, `LIST`, `ERR`, `INT`, `FLOAT`, `MAP`,
+`ANON`, `WAIF`, `BOOL`), the verb context (`player`, `this`, `caller`, `verb`,
+`args`, `argstr`, `dobj`, `dobjstr`, `prepstr`, `iobj`, `iobjstr`), and `true`
+and `false`. To the parser they are ordinary identifiers, and code may assign
+to them, so the grammar does not treat them specially. Tools that track
+variables need the list, though, or they report `LIST` as never assigned.
+
+`builtin-variables.json` is that list, taken from `new_builtin_names()` in
+ToastStunt's `src/sym_table.cc`. Each entry has the name as the server spells
+it, its environment `slot`, a `kind` (`type`, `context` or `boolean`), the
+database version that introduced it (`since`), and for the constants their
+`value` from `fill_in_rt_consts()` in `src/eval_env.cc`.
+
+```js
+import builtins from "tree-sitter-moocode/builtin-variables.json" with { type: "json" };
+
+const predefined = new Set(builtins.variables.map((variable) => variable.name.toLowerCase()));
+const isPredefined = (name) => predefined.has(name.toLowerCase());
+```
+
+The server finds variables with a case-insensitive comparison, so `list` and
+`LIST` are the same variable; compare names without regard to case.
+`queries/highlights.scm` captures these names as `@variable.builtin` and
+`@constant.builtin`, and `scripts/check-builtin-variables.mjs` fails if the
+query and the JSON file disagree.
+
 ## Commands
 
 ```sh

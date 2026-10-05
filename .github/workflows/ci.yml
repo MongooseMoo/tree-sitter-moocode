@@ -26,6 +26,8 @@ jobs:
           git diff --exit-code -- src
       - name: Corpus and query tests
         run: npx tree-sitter test
+      - name: Highlight query matches builtin-variables.json
+        run: node scripts/check-builtin-variables.mjs
       - name: Build browser parser
         run: npm run build:wasm
       - name: Round-trip canonical fixtures through the built parser

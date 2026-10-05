@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-moocode",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Tree-sitter grammar for LambdaMOO/ToastStunt MOO code.",
   "repository": {
     "type": "git",
@@ -12,6 +12,7 @@
     "grammar.js",
     "tree-sitter.json",
     "tree-sitter-moocode.wasm",
+    "builtin-variables.json",
     "queries",
     "src",
     "README.md"
@@ -19,6 +20,7 @@
   "exports": {
     ".": "./grammar.js",
     "./tree-sitter-moocode.wasm": "./tree-sitter-moocode.wasm",
+    "./builtin-variables.json": "./builtin-variables.json",
     "./queries/folds.scm": "./queries/folds.scm",
     "./queries/highlights.scm": "./queries/highlights.scm",
     "./queries/locals.scm": "./queries/locals.scm",
@@ -27,7 +29,7 @@
   "scripts": {
     "build:wasm": "tree-sitter build --wasm --output tree-sitter-moocode.wasm .",
     "generate": "tree-sitter generate",
-    "test": "tree-sitter test",
+    "test": "tree-sitter test && node scripts/check-builtin-variables.mjs",
     "parse": "tree-sitter parse",
     "roundtrip": "node scripts/roundtrip.mjs"
   },

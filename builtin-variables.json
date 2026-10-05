@@ -1,0 +1,30 @@
+{
+  "source": "ToastStunt src/sym_table.cc new_builtin_names(), src/include/sym_table.h, src/eval_env.cc fill_in_rt_consts()",
+  "caseSensitive": false,
+  "variables": [
+    { "name": "NUM", "slot": 0, "kind": "type", "value": 0, "since": "DBV_Prehistory" },
+    { "name": "OBJ", "slot": 1, "kind": "type", "value": 1, "since": "DBV_Prehistory" },
+    { "name": "STR", "slot": 2, "kind": "type", "value": 2, "since": "DBV_Prehistory" },
+    { "name": "LIST", "slot": 3, "kind": "type", "value": 4, "since": "DBV_Prehistory" },
+    { "name": "ERR", "slot": 4, "kind": "type", "value": 3, "since": "DBV_Prehistory" },
+    { "name": "player", "slot": 5, "kind": "context", "since": "DBV_Prehistory" },
+    { "name": "this", "slot": 6, "kind": "context", "since": "DBV_Prehistory" },
+    { "name": "caller", "slot": 7, "kind": "context", "since": "DBV_Prehistory" },
+    { "name": "verb", "slot": 8, "kind": "context", "since": "DBV_Prehistory" },
+    { "name": "args", "slot": 9, "kind": "context", "since": "DBV_Prehistory" },
+    { "name": "argstr", "slot": 10, "kind": "context", "since": "DBV_Prehistory" },
+    { "name": "dobj", "slot": 11, "kind": "context", "since": "DBV_Prehistory" },
+    { "name": "dobjstr", "slot": 12, "kind": "context", "since": "DBV_Prehistory" },
+    { "name": "prepstr", "slot": 13, "kind": "context", "since": "DBV_Prehistory" },
+    { "name": "iobj", "slot": 14, "kind": "context", "since": "DBV_Prehistory" },
+    { "name": "iobjstr", "slot": 15, "kind": "context", "since": "DBV_Prehistory" },
+    { "name": "INT", "slot": 16, "kind": "type", "value": 0, "since": "DBV_Float" },
+    { "name": "FLOAT", "slot": 17, "kind": "type", "value": 9, "since": "DBV_Float" },
+    { "name": "MAP", "slot": 18, "kind": "type", "value": 10, "since": "DBV_Map" },
+    { "name": "ANON", "slot": 19, "kind": "type", "value": 12, "since": "DBV_Anon" },
+    { "name": "WAIF", "slot": 20, "kind": "type", "value": 13, "since": "DBV_Waif" },
+    { "name": "BOOL", "slot": 21, "kind": "type", "value": 14, "since": "DBV_Bool" },
+    { "name": "true", "slot": 22, "kind": "boolean", "value": true, "since": "DBV_Bool" },
+    { "name": "false", "slot": 23, "kind": "boolean", "value": false, "since": "DBV_Bool" }
+  ]
+}
